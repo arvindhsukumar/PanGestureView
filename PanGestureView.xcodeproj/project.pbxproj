@@ -14,6 +14,8 @@
 		D4FC470A1C5CEF5F00DC42CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FC47081C5CEF5F00DC42CA /* LaunchScreen.storyboard */; };
 		D4FC47151C5CEF5F00DC42CA /* PanGestureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47141C5CEF5F00DC42CA /* PanGestureViewTests.swift */; };
 		D4FC47201C5CEF5F00DC42CA /* PanGestureViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC471F1C5CEF5F00DC42CA /* PanGestureViewUITests.swift */; };
+		D4FC472F1C5CEF7E00DC42CA /* PanGestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */; };
+		D4FC47311C5CFE0A00DC42CA /* PanGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D4FC471B1C5CEF5F00DC42CA /* PanGestureViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PanGestureViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC471F1C5CEF5F00DC42CA /* PanGestureViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureViewUITests.swift; sourceTree = "<group>"; };
 		D4FC47211C5CEF5F00DC42CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureView.swift; sourceTree = "<group>"; };
+		D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 		D4FC46FE1C5CEF5F00DC42CA /* PanGestureView */ = {
 			isa = PBXGroup;
 			children = (
+				D4FC472D1C5CEF6600DC42CA /* Classes */,
 				D4FC46FF1C5CEF5F00DC42CA /* AppDelegate.swift */,
 				D4FC47011C5CEF5F00DC42CA /* ViewController.swift */,
 				D4FC47031C5CEF5F00DC42CA /* Main.storyboard */,
@@ -123,6 +128,15 @@
 				D4FC47211C5CEF5F00DC42CA /* Info.plist */,
 			);
 			path = PanGestureViewUITests;
+			sourceTree = "<group>";
+		};
+		D4FC472D1C5CEF6600DC42CA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */,
+				D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +270,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4FC472F1C5CEF7E00DC42CA /* PanGestureView.swift in Sources */,
+				D4FC47311C5CFE0A00DC42CA /* PanGestureAction.swift in Sources */,
 				D4FC47021C5CEF5F00DC42CA /* ViewController.swift in Sources */,
 				D4FC47001C5CEF5F00DC42CA /* AppDelegate.swift in Sources */,
 			);
