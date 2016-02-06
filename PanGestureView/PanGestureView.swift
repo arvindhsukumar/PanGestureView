@@ -25,9 +25,6 @@ class PanGestureView: UIView {
     private var actionViews: [PanGestureViewSwipeDirection:PanGestureActionView] = [:]
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var swipeDirection: PanGestureViewSwipeDirection!
-    private var originalContentViewConstraints: [PanGestureViewSwipeDirection:[NSLayoutConstraint]] = [:]
-    private var actionContentViewConstraints: [PanGestureViewSwipeDirection:[NSLayoutConstraint]] = [:]
-
     
     override init(frame:CGRect){
         super.init(frame:frame)
@@ -77,10 +74,6 @@ class PanGestureView: UIView {
     
     func addConstraintsToActionView(actionView:PanGestureActionView, direction:PanGestureViewSwipeDirection) {
         
-        if let existingConstraints = originalContentViewConstraints[direction] {
-            NSLayoutConstraint.deactivateConstraints(existingConstraints)
-            self.removeConstraints(existingConstraints)
-        }
         let views = ["view":actionView,"contentView":contentView]
         
         let orientation1 = (horizontalSwipeDirections.contains(direction)) ? "H" : "V"
@@ -99,8 +92,6 @@ class PanGestureView: UIView {
         let constraints2 = NSLayoutConstraint.constraintsWithVisualFormat(constraint2, options: [], metrics: [:], views: views)
         
         self.addConstraints(constraints1)
-        actionContentViewConstraints[direction] = constraints1
-        
         self.addConstraints(constraints2)
     }
 }
@@ -118,30 +109,96 @@ extension PanGestureView : UIGestureRecognizerDelegate {
             
             case .Changed:
                 
-                if actions[swipeDirection] == nil {
-                    return
-                }
+                invertSwipeDirectionIfRequired(translation)
+                
                 updatePosition(translation)
             
             case .Cancelled:
                 print("cancelled")
             case .Ended:
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.contentView.center = self.center
-                    self.setNeedsLayout()
-                    self.layoutIfNeeded()
+                
+                if let actionView = self.actionViews[self.swipeDirection], let action = self.actions[self.swipeDirection] where actionView.shouldTrigger  {
 
-                    }, completion: { (finished) -> Void in
+                    
+                    UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                         
-                        if let actionView = self.actionViews[self.swipeDirection], let action = self.actions[self.swipeDirection] where actionView.shouldTrigger {
-                           
-                            action.didTriggerBlock?(swipeDirection:self.swipeDirection)
-                        }
-                })
+                        self.resetView()
+                        
+                        }, completion: { (finished) -> Void in
+                            
+                            if finished {
+                                action.didTriggerBlock?(swipeDirection: self.swipeDirection)
+                            }
+                    })
+                }
+                else {
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.resetView()
+                        
+                        }, completion: { (finished) -> Void in
+                            
+                            
+                    })
+
+                }
+            
             
             default:
                 break
         }
+    }
+    
+    private func swipeDirectionWasInverted(originalDirection:PanGestureViewSwipeDirection, translation:CGPoint) -> Bool {
+        
+        var wasInverted = false
+        
+        switch originalDirection {
+        case .Left:
+            wasInverted = translation.x > 0
+        case .Right:
+            wasInverted = translation.x < 0
+        case .Up:
+            wasInverted = translation.y > 0
+        case .Down:
+            wasInverted = translation.y < 0
+        default:
+            break
+        }
+        
+        return wasInverted
+    }
+    
+    private func inverseForSwipeDirection(direction:PanGestureViewSwipeDirection) -> PanGestureViewSwipeDirection{
+        
+        var inverseDirection:PanGestureViewSwipeDirection!
+        
+        switch direction {
+        case .Left:
+            inverseDirection = .Right
+        case .Right:
+            inverseDirection = .Left
+        case .Up:
+            inverseDirection = .Down
+        case .Down:
+            inverseDirection = .Up
+        default:
+            break
+        }
+
+        return inverseDirection
+    }
+    
+    private func invertSwipeDirectionIfRequired(translation:CGPoint) {
+        if swipeDirectionWasInverted(self.swipeDirection, translation: translation){
+            self.swipeDirection = inverseForSwipeDirection(self.swipeDirection)
+        }
+    }
+    
+    private func resetView(){
+        self.contentView.center = self.center
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     private func updatePosition(translation:CGPoint){
@@ -208,7 +265,7 @@ extension PanGestureView : UIGestureRecognizerDelegate {
     
 }
 
-let kMinimumTranslation: CGFloat = 30
+let kMinimumTranslation: CGFloat = 15
 class PanGestureActionView: UIView {
     var imageView: UIImageView!
     var action: PanGestureAction!
@@ -276,12 +333,11 @@ class PanGestureActionView: UIView {
             let origin = (horizontalSwipeDirections.contains(self.action.swipeDirection)) ? self.bounds.origin.x : self.bounds.origin.y
             let imageViewOrigin = (horizontalSwipeDirections.contains(self.action.swipeDirection)) ? self.imageView.frame.origin.x : self.imageView.frame.origin.y
             imageView.alpha = (origin + imageViewOrigin)/kMinimumTranslation
-            isActive = true
         }
         else {
             imageView.alpha = 0
-            isActive = false
         }
-        
+
+        isActive = (imageView.alpha >= 1)
     }
 }

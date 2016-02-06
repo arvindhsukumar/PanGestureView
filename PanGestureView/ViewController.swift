@@ -34,10 +34,21 @@ class ViewController: UIViewController {
         
         let action2 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Left)
         action2.backgroundColor = UIColor.redColor()
+        action2.didTriggerBlock = {
+            direction in
+            
+            label.text = "\(direction)"
+        }
         swipeView.addAction(action2)
         
         let action4 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Up)
         action4.backgroundColor = UIColor.orangeColor()
+        action4.didTriggerBlock = {
+            direction in
+            
+            label.text = "\(direction)"
+        }
+
         swipeView.addAction(action4)
         
         let action5 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Down)
@@ -45,9 +56,9 @@ class ViewController: UIViewController {
         action5.didTriggerBlock = {
             direction in
             
-            print(direction)
+            label.text = "\(direction)"
         }
-        swipeView.addAction(action5)
+//        swipeView.addAction(action5)
 
 
 
