@@ -25,6 +25,9 @@ class PanGestureView: UIView {
     private var actionViews: [PanGestureViewSwipeDirection:PanGestureActionView] = [:]
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var swipeDirection: PanGestureViewSwipeDirection!
+    private var originalContentViewConstraints: [PanGestureViewSwipeDirection:[NSLayoutConstraint]] = [:]
+    private var actionContentViewConstraints: [PanGestureViewSwipeDirection:[NSLayoutConstraint]] = [:]
+
     
     override init(frame:CGRect){
         super.init(frame:frame)
@@ -37,16 +40,24 @@ class PanGestureView: UIView {
     }
 
     private func setupView(){
-        contentView = UIView(frame: self.bounds)
-        contentView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
-        addSubview(contentView)
+        addContentView()
         
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         panGestureRecognizer.delegate = self
         addGestureRecognizer(panGestureRecognizer)
     }
     
+    private func addContentView(){
+        contentView = UIView(frame: self.bounds)
+        contentView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        contentView.translatesAutoresizingMaskIntoConstraints = true
+        addSubview(contentView)
+        
+        
+
+    }
     func addAction(action:PanGestureAction){
+        
         let direction = action.swipeDirection
         
         actions[direction] = action
@@ -57,8 +68,8 @@ class PanGestureView: UIView {
         
         let view = PanGestureActionView(frame: CGRectMake(0,0,0,0),action:action)
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         self.addSubview(view)
+        
         addConstraintsToActionView(view, direction: direction)
         
         actionViews[direction] = view
@@ -66,6 +77,10 @@ class PanGestureView: UIView {
     
     func addConstraintsToActionView(actionView:PanGestureActionView, direction:PanGestureViewSwipeDirection) {
         
+        if let existingConstraints = originalContentViewConstraints[direction] {
+            NSLayoutConstraint.deactivateConstraints(existingConstraints)
+            self.removeConstraints(existingConstraints)
+        }
         let views = ["view":actionView,"contentView":contentView]
         
         let orientation1 = (horizontalSwipeDirections.contains(direction)) ? "H" : "V"
@@ -73,10 +88,10 @@ class PanGestureView: UIView {
 
         var constraint1:String!
         if direction == .Left || direction == .Up {
-            constraint1 = "\(orientation1):[contentView]-0-[view(>=0)]-0-|"
+            constraint1 = "\(orientation1):[contentView]-(<=0@250,0@750)-[view(>=0)]-0-|"
         }
         else {
-            constraint1 = "\(orientation1):|-0-[view(>=0)]-0-[contentView]"
+            constraint1 = "\(orientation1):|-0-[view(>=0)]-(<=0@250,0@750)-[contentView]"
         }
         let constraints1 = NSLayoutConstraint.constraintsWithVisualFormat(constraint1, options: [], metrics: [:], views: views)
         
@@ -84,6 +99,8 @@ class PanGestureView: UIView {
         let constraints2 = NSLayoutConstraint.constraintsWithVisualFormat(constraint2, options: [], metrics: [:], views: views)
         
         self.addConstraints(constraints1)
+        actionContentViewConstraints[direction] = constraints1
+        
         self.addConstraints(constraints2)
     }
 }
@@ -116,6 +133,10 @@ extension PanGestureView : UIGestureRecognizerDelegate {
 
                     }, completion: { (finished) -> Void in
                         
+                        if let actionView = self.actionViews[self.swipeDirection], let action = self.actions[self.swipeDirection] where actionView.shouldTrigger {
+                           
+                            action.didTriggerBlock?(swipeDirection:self.swipeDirection)
+                        }
                 })
             
             default:
@@ -136,6 +157,15 @@ extension PanGestureView : UIGestureRecognizerDelegate {
         
         self.setNeedsLayout()
         self.layoutIfNeeded()
+        
+        if let actionView = actionViews[swipeDirection] {
+            if actionView.isActive {
+                actionView.shouldTrigger = true
+            }
+            else {
+                actionView.shouldTrigger = false
+            }
+        }
         
     }
     
@@ -182,6 +212,8 @@ let kMinimumTranslation: CGFloat = 30
 class PanGestureActionView: UIView {
     var imageView: UIImageView!
     var action: PanGestureAction!
+    var isActive:Bool = false
+    var shouldTrigger:Bool = false
     
     override init(frame:CGRect){
         super.init(frame:frame)
@@ -244,9 +276,11 @@ class PanGestureActionView: UIView {
             let origin = (horizontalSwipeDirections.contains(self.action.swipeDirection)) ? self.bounds.origin.x : self.bounds.origin.y
             let imageViewOrigin = (horizontalSwipeDirections.contains(self.action.swipeDirection)) ? self.imageView.frame.origin.x : self.imageView.frame.origin.y
             imageView.alpha = (origin + imageViewOrigin)/kMinimumTranslation
+            isActive = true
         }
         else {
             imageView.alpha = 0
+            isActive = false
         }
         
     }

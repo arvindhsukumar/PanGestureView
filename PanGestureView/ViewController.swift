@@ -19,28 +19,34 @@ class ViewController: UIViewController {
         label.textAlignment = NSTextAlignment.Center
         label.autoresizingMask = [UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleRightMargin, UIViewAutoresizing.FlexibleTopMargin, UIViewAutoresizing.FlexibleBottomMargin]
         swipeView.contentView.addSubview(label)
-        label.center = swipeView.center
+        label.center = swipeView.contentView.center
         
         swipeView.contentView.backgroundColor = UIColor.greenColor()
         
         let action = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Right)
         action.backgroundColor = UIColor.blueColor()
+        action.didTriggerBlock = {
+            direction in
+            
+            label.text = "\(direction)"
+        }
         swipeView.addAction(action)
         
         let action2 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Left)
         action2.backgroundColor = UIColor.redColor()
         swipeView.addAction(action2)
         
-        let action3 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Right)
-        action3.backgroundColor = UIColor.brownColor()
-        swipeView.addAction(action3)
-
         let action4 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Up)
         action4.backgroundColor = UIColor.orangeColor()
         swipeView.addAction(action4)
         
         let action5 = PanGestureAction(swipeDirection: PanGestureViewSwipeDirection.Down)
         action5.backgroundColor = UIColor.yellowColor()
+        action5.didTriggerBlock = {
+            direction in
+            
+            print(direction)
+        }
         swipeView.addAction(action5)
 
 
