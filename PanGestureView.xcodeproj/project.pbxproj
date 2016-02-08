@@ -78,6 +78,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D42F49F71C68D5AD0029B3B2 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				D4FC46FF1C5CEF5F00DC42CA /* AppDelegate.swift */,
+				D4FC47011C5CEF5F00DC42CA /* ViewController.swift */,
+				D4FC47031C5CEF5F00DC42CA /* Main.storyboard */,
+				D4FC47061C5CEF5F00DC42CA /* Assets.xcassets */,
+				D4FC47081C5CEF5F00DC42CA /* LaunchScreen.storyboard */,
+				D4FC470B1C5CEF5F00DC42CA /* Info.plist */,
+			);
+			name = Example;
+			sourceTree = "<group>";
+		};
 		D4FC46F31C5CEF5F00DC42CA = {
 			isa = PBXGroup;
 			children = (
@@ -101,13 +114,8 @@
 		D4FC46FE1C5CEF5F00DC42CA /* PanGestureView */ = {
 			isa = PBXGroup;
 			children = (
+				D42F49F71C68D5AD0029B3B2 /* Example */,
 				D4FC472D1C5CEF6600DC42CA /* Classes */,
-				D4FC46FF1C5CEF5F00DC42CA /* AppDelegate.swift */,
-				D4FC47011C5CEF5F00DC42CA /* ViewController.swift */,
-				D4FC47031C5CEF5F00DC42CA /* Main.storyboard */,
-				D4FC47061C5CEF5F00DC42CA /* Assets.xcassets */,
-				D4FC47081C5CEF5F00DC42CA /* LaunchScreen.storyboard */,
-				D4FC470B1C5CEF5F00DC42CA /* Info.plist */,
 			);
 			path = PanGestureView;
 			sourceTree = "<group>";
@@ -498,6 +506,7 @@
 				D4FC47261C5CEF5F00DC42CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4FC47271C5CEF5F00DC42CA /* Build configuration list for PBXNativeTarget "PanGestureViewTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +515,7 @@
 				D4FC47291C5CEF5F00DC42CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4FC472A1C5CEF5F00DC42CA /* Build configuration list for PBXNativeTarget "PanGestureViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +524,7 @@
 				D4FC472C1C5CEF5F00DC42CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -218,9 +218,23 @@ extension PanGestureView : UIGestureRecognizerDelegate {
         if let actionView = actionViews[swipeDirection] {
             if actionView.isActive {
                 actionView.shouldTrigger = true
+                UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    
+                    actionView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+                    
+                    }, completion: { (finished) -> Void in
+                        
+                })
             }
             else {
                 actionView.shouldTrigger = false
+                UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    
+                    actionView.transform = CGAffineTransformIdentity
+                    
+                    }, completion: { (finished) -> Void in
+                        
+                })
             }
         }
         
@@ -290,12 +304,13 @@ class PanGestureActionView: UIView {
     
     private func setupView(){
         imageView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
-        imageView.backgroundColor = UIColor.blackColor()
         imageView.alpha = 0
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = action.image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        imageView.tintColor = action.tintColor ?? UIColor.whiteColor()
         addSubview(imageView)
         
-        self.backgroundColor = action.backgroundColor
+        self.backgroundColor = action.backgroundColor ?? UIColor.whiteColor()
         setupConstraints()
         
     }
