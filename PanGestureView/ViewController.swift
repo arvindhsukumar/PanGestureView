@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        self.edgesForExtendedLayout = UIRectEdge.None
         setupViews()
         setupActions()
         
@@ -71,6 +71,7 @@ class ViewController: UIViewController {
     }
     
     private func setupViews(){
+
         let container = UIView(frame: CGRectMake(0,0,200,200))
         container.backgroundColor = UIColor(white: 0.9, alpha: 1)
         container.layer.cornerRadius = 100
@@ -86,9 +87,6 @@ class ViewController: UIViewController {
         swipeView.contentView.addSubview(container)
         container.center = swipeView.contentView.center
         
-        
-       
-        print(container.center)
     }
     
     private func actionDidTrigger(action: PanGestureAction){
@@ -103,6 +101,10 @@ class ViewController: UIViewController {
 
         }
         
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 
 }

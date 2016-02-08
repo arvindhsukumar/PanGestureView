@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TqL-yp-YZx" customClass="PanGestureView" customModule="PanGestureView" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="TqL-yp-YZx" secondAttribute="trailing" id="8jl-V4-rhK"/>
-                            <constraint firstItem="TqL-yp-YZx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="A3S-x5-Btg"/>
+                            <constraint firstItem="TqL-yp-YZx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="A3S-x5-Btg"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="TqL-yp-YZx" secondAttribute="bottom" id="h9p-kb-8eb"/>
                             <constraint firstItem="TqL-yp-YZx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zOF-Wc-0Mi"/>
                         </constraints>
