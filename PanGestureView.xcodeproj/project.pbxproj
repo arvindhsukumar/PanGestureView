@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D42F49FD1C68E3160029B3B2 /* PanGestureView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D42F49FC1C68E3160029B3B2 /* PanGestureView.podspec */; };
+		D42F4A001C68E5630029B3B2 /* PanGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42F49FE1C68E5630029B3B2 /* PanGestureAction.swift */; };
+		D42F4A011C68E5630029B3B2 /* PanGestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42F49FF1C68E5630029B3B2 /* PanGestureView.swift */; };
 		D4FC47001C5CEF5F00DC42CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC46FF1C5CEF5F00DC42CA /* AppDelegate.swift */; };
 		D4FC47021C5CEF5F00DC42CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47011C5CEF5F00DC42CA /* ViewController.swift */; };
 		D4FC47051C5CEF5F00DC42CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FC47031C5CEF5F00DC42CA /* Main.storyboard */; };
@@ -14,8 +17,6 @@
 		D4FC470A1C5CEF5F00DC42CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4FC47081C5CEF5F00DC42CA /* LaunchScreen.storyboard */; };
 		D4FC47151C5CEF5F00DC42CA /* PanGestureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47141C5CEF5F00DC42CA /* PanGestureViewTests.swift */; };
 		D4FC47201C5CEF5F00DC42CA /* PanGestureViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC471F1C5CEF5F00DC42CA /* PanGestureViewUITests.swift */; };
-		D4FC472F1C5CEF7E00DC42CA /* PanGestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */; };
-		D4FC47311C5CFE0A00DC42CA /* PanGestureAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D42F49FC1C68E3160029B3B2 /* PanGestureView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PanGestureView.podspec; sourceTree = SOURCE_ROOT; };
+		D42F49FE1C68E5630029B3B2 /* PanGestureAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanGestureAction.swift; path = Classes/PanGestureAction.swift; sourceTree = SOURCE_ROOT; };
+		D42F49FF1C68E5630029B3B2 /* PanGestureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanGestureView.swift; path = Classes/PanGestureView.swift; sourceTree = SOURCE_ROOT; };
 		D4FC46FC1C5CEF5F00DC42CA /* PanGestureView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PanGestureView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC46FF1C5CEF5F00DC42CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4FC47011C5CEF5F00DC42CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,8 +53,6 @@
 		D4FC471B1C5CEF5F00DC42CA /* PanGestureViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PanGestureViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC471F1C5CEF5F00DC42CA /* PanGestureViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureViewUITests.swift; sourceTree = "<group>"; };
 		D4FC47211C5CEF5F00DC42CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureView.swift; sourceTree = "<group>"; };
-		D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanGestureAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		D4FC46FE1C5CEF5F00DC42CA /* PanGestureView */ = {
 			isa = PBXGroup;
 			children = (
+				D42F49FC1C68E3160029B3B2 /* PanGestureView.podspec */,
 				D42F49F71C68D5AD0029B3B2 /* Example */,
 				D4FC472D1C5CEF6600DC42CA /* Classes */,
 			);
@@ -141,8 +144,8 @@
 		D4FC472D1C5CEF6600DC42CA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D4FC472E1C5CEF7E00DC42CA /* PanGestureView.swift */,
-				D4FC47301C5CFE0A00DC42CA /* PanGestureAction.swift */,
+				D42F49FE1C68E5630029B3B2 /* PanGestureAction.swift */,
+				D42F49FF1C68E5630029B3B2 /* PanGestureView.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				D4FC470A1C5CEF5F00DC42CA /* LaunchScreen.storyboard in Resources */,
 				D4FC47071C5CEF5F00DC42CA /* Assets.xcassets in Resources */,
 				D4FC47051C5CEF5F00DC42CA /* Main.storyboard in Resources */,
+				D42F49FD1C68E3160029B3B2 /* PanGestureView.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,10 +282,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4FC472F1C5CEF7E00DC42CA /* PanGestureView.swift in Sources */,
-				D4FC47311C5CFE0A00DC42CA /* PanGestureAction.swift in Sources */,
+				D42F4A011C68E5630029B3B2 /* PanGestureView.swift in Sources */,
 				D4FC47021C5CEF5F00DC42CA /* ViewController.swift in Sources */,
 				D4FC47001C5CEF5F00DC42CA /* AppDelegate.swift in Sources */,
+				D42F4A001C68E5630029B3B2 /* PanGestureAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +426,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PanGestureView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.behindtechlines.PanGestureView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,6 +438,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PanGestureView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.behindtechlines.PanGestureView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
