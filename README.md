@@ -1,6 +1,6 @@
 PanGestureView allows you to attach custom actions that will be triggered when the user pans the view. Think of it as a swipeable UITableViewCell, but as a generic UIView.
 
-![Screenshot](http://i.imgur.com/P2E8ANBm.gif)
+![Screenshot](Assets/PanGestureView.gif)
 
 ### Installation
 
