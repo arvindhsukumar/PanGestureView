@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum PanGestureViewSwipeDirection {
+public enum PanGestureViewSwipeDirection {
     case None
     case Down
     case Left
@@ -18,20 +18,22 @@ enum PanGestureViewSwipeDirection {
 
 let horizontalSwipeDirections = [PanGestureViewSwipeDirection.Left, PanGestureViewSwipeDirection.Right]
 
-class PanGestureView: UIView {
+public class PanGestureView: UIView {
 
-    var contentView: UIView!
+    public var contentView: UIView!
     private var actions: [PanGestureViewSwipeDirection:PanGestureAction] = [:]
     private var actionViews: [PanGestureViewSwipeDirection:PanGestureActionView] = [:]
     private var panGestureRecognizer: UIPanGestureRecognizer!
     private var swipeDirection: PanGestureViewSwipeDirection!
+    private var displayLink: CADisplayLink?
+    private var currentTranslationInView: CGPoint?
     
-    override init(frame:CGRect){
+    public override init(frame:CGRect){
         super.init(frame:frame)
         setupView()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
     }
@@ -39,7 +41,7 @@ class PanGestureView: UIView {
     private func setupView(){
         addContentView()
         
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PanGestureView.handlePan(_:)))
         panGestureRecognizer.delegate = self
         addGestureRecognizer(panGestureRecognizer)
     }
@@ -53,7 +55,7 @@ class PanGestureView: UIView {
         
 
     }
-    func addAction(action:PanGestureAction){
+    public func addAction(action:PanGestureAction){
         
         let direction = action.swipeDirection
         
@@ -97,30 +99,45 @@ class PanGestureView: UIView {
 }
 
 extension PanGestureView : UIGestureRecognizerDelegate {
+    func startDisplayLink() {
+        displayLink = CADisplayLink(target: self, selector: #selector(PanGestureView.handleDisplayLink(_:)))
+        displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+    }
+    
+    func stopDisplayLink() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+
+    func handleDisplayLink(link:CADisplayLink) {
+        guard let translation = currentTranslationInView else {return}
+        invertSwipeDirectionIfRequired(translation)
+        updatePosition(translation)
+    }
     
     func handlePan(gesture:UIPanGestureRecognizer){
+        
         let translation = gesture.translationInView(gesture.view)
+        currentTranslationInView = translation
         let velocity = gesture.velocityInView(gesture.view)
         
         switch gesture.state {
             case .Began:
                 swipeDirection = swipeDirectionForTranslation(translation,velocity: velocity)
-                print(swipeDirection)
-            
+                startDisplayLink()
             case .Changed:
-                
-                invertSwipeDirectionIfRequired(translation)
-                
-                updatePosition(translation)
-            
+                break
             case .Cancelled:
+                self.stopDisplayLink()
                 print("cancelled")
+            case .Failed:
+                self.stopDisplayLink()
             case .Ended:
-                
+                self.stopDisplayLink()
                 if let actionView = self.actionViews[self.swipeDirection], let action = self.actions[self.swipeDirection] where actionView.shouldTrigger  {
 
                     
-                    UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                         
                         self.resetView()
                         
@@ -128,21 +145,19 @@ extension PanGestureView : UIGestureRecognizerDelegate {
                             
                             if finished {
                                 action.didTriggerBlock?(swipeDirection: self.swipeDirection)
+                                
                             }
                     })
                 }
                 else {
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animateWithDuration(0.3, delay: 0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.AllowUserInteraction], animations: { 
                         
                         self.resetView()
                         
-                        }, completion: { (finished) -> Void in
-                            
-                            
-                    })
+                        }, completion: { (finished) in
 
+                    })
                 }
-            
             
             default:
                 break
@@ -218,7 +233,7 @@ extension PanGestureView : UIGestureRecognizerDelegate {
         if let actionView = actionViews[swipeDirection] {
             if actionView.isActive {
                 actionView.shouldTrigger = true
-                UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                UIView.animateWithDuration(0.4, delay: 0, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                     
                     actionView.transform = CGAffineTransformMakeScale(1.2, 1.2)
                     
@@ -228,7 +243,7 @@ extension PanGestureView : UIGestureRecognizerDelegate {
             }
             else {
                 actionView.shouldTrigger = false
-                UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                UIView.animateWithDuration(0.4, delay: 0, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                     
                     actionView.transform = CGAffineTransformIdentity
                     
@@ -306,7 +321,7 @@ class PanGestureActionView: UIView {
         imageView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
         imageView.alpha = 0
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = action.image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        imageView.image = action.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         imageView.tintColor = action.tintColor ?? UIColor.whiteColor()
         addSubview(imageView)
         
